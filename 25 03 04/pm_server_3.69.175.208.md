@@ -89,7 +89,8 @@ _# обнаружен неправильный URL адрес http://18.153.51.1
 
 **Recommendations for process improvement** (рекомендации по улучшению процессов):
 1. внедрить регулярный мониторинг статуса процессов и сервиса httpd для своевременного обнаружения проблем.
-2. создать скрипт backup_logs.sh  для автоматической архивизации логов и удаления старых копий.
+
+- создать скрипт backup_logs.sh  для автоматической архивизации логов, удаления старых копий и перезапускает веб-сервер Apache.
 
 touch backup_logs.sh
 chmod ugo +x backup_logs.sh
@@ -106,7 +107,7 @@ find /home/ec2-user/access_log_archives/ -name "*.tar.gz" -mmin +3 | xargs rm
 _# 4. restart apache_
 sudo systemctl restart httpd.service
 
-3. Создать задачу в планировщике cron, чтобы этот файл архивировался и начинался заново каждый день.
+-  Создать задачу в планировщике cron, чтобы скрипт backup_logs.sh  выполнялся каждый раз, когда начинается минута (в любое время дня и ночи).
 
 sudo vim /etc/crontab
 ***** /home/ec2-user/backup_logs.sh
